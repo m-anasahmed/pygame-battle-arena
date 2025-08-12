@@ -1,12 +1,10 @@
 # ⚔️ Multiplayer Battle Arena (Python + Pygame)
-
 A classic 2D fighting game built with **Pygame**, featuring two unique characters — a Warrior and a Wizard — battling it out with melee and magic attacks.  
 The game includes animations, health bars, a round system, victory screens, and background music.
 
 ---
 
 ## 🎮 Features
-
 - **Two playable characters** with different spritesheets
 - **Attack combos** (two attack types per character)
 - **Jumping, running, idle, hit, and death animations**
@@ -19,7 +17,6 @@ The game includes animations, health bars, a round system, victory screens, and 
 ---
 
 ## 🕹️ Controls
-
 ### **Player 1**
 | Action      | Key  |
 |-------------|------|
@@ -41,7 +38,6 @@ The game includes animations, health bars, a round system, victory screens, and 
 ---
 
 ## 📂 Folder Structure
-
 brawler/
 │
 ├── assets/
@@ -97,6 +93,15 @@ python `main.py`
 * **Pygame** (for rendering, input handling, and sound)
 * **Spritesheets** for animation
 * **Custom pixel art and audio**
+
+---
+
+## 🎮 Future plans
+- **Multiplayer & AI Mode** – Play with friends or against the computer.
+- **Character Selection** – Choose from multiple fighters with unique animations.
+- **Sprite Sheet & Folder Animations** – Supports both styles for smooth motion.
+- **Animated Backgrounds** – Immersive arena visuals.
+- **Dynamic Rounds** – Fighters respawn and continue until a winner emerges.
 
 ---
 
