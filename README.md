@@ -1,9 +1,12 @@
-# Brawler - 2D Fighting Game (Pygame)
+# ⚔️ Multiplayer Battle Arena (Python + Pygame)
 
 A classic 2D fighting game built with **Pygame**, featuring two unique characters — a Warrior and a Wizard — battling it out with melee and magic attacks.  
 The game includes animations, health bars, a round system, victory screens, and background music.
 
+---
+
 ## 🎮 Features
+
 - **Two playable characters** with different spritesheets
 - **Attack combos** (two attack types per character)
 - **Jumping, running, idle, hit, and death animations**
@@ -12,6 +15,8 @@ The game includes animations, health bars, a round system, victory screens, and 
 - **Victory screen** between rounds
 - **Background music** and sound effects
 - **Simple controls** for two players on the same keyboard
+
+---
 
 ## 🕹️ Controls
 
@@ -32,6 +37,8 @@ The game includes animations, health bars, a round system, victory screens, and 
 | Jump        | ↑ (Up Arrow)     |
 | Attack 1    | Numpad 1         |
 | Attack 2    | Numpad 2         |
+
+---
 
 ## 📂 Folder Structure
 
@@ -58,18 +65,32 @@ brawler/
 ├── fighter.py
 └── README.md
 
+---
 
-## 🚀 How to Run
+## 🖼️ Screenshots
+
+Example:  
+![Gameplay Screenshot](assets/screenshots/gameplay.png)
+
+---
+
+## 📦 Installation & Setup
+
+### 🚀 How to Run
 ### 1️⃣ Install Dependencies
 Make sure you have **Python 3** installed.  
-Install `pygame`:
-'pip install pygame'
+Install `pygame`: 
+`pip install pygame`
 
+**Clone the repository**
+   `git clone https://github.com/your-username/multiplayer-battle-arena.git`
+   `cd multiplayer-battle-arena`
 
 ### 2️⃣ Run the Game
 In the project folder:
-python main.py
+python `main.py`
 
+---
 
 ## 🛠️ Technologies Used
 * **Python 3**
@@ -77,9 +98,15 @@ python main.py
 * **Spritesheets** for animation
 * **Custom pixel art and audio**
 
+---
+
 ## 📜 License
 This project is for **learning purposes**.
 If you use the code or assets, please credit the original creators.
 
+---
+
 ## 👨‍💻 Author
 Created by **Muhammad Anas** — Inspired by classic arcade fighting games.
+
+---
