@@ -63,8 +63,7 @@ brawler/
 ### 1️⃣ Install Dependencies
 Make sure you have **Python 3** installed.  
 Install `pygame`:
-```bash
-pip install pygame
+'pip install pygame'
 
 
 ### 2️⃣ Run the Game
