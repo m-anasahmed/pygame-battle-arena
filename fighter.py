@@ -1,4 +1,5 @@
 import pygame
+import random
 
 class Fighter():
   def __init__(self, player, x, y, flip, data, sprite_sheet, animation_steps, sound):
@@ -37,7 +38,7 @@ class Fighter():
     return animation_list
 
 
-  def move(self, screen_width, screen_height, surface, target, round_over):
+  def move(self, screen_width, screen_height, surface, target, round_over, single_player_mode):
     SPEED = 10
     GRAVITY = 2
     dx = 0
@@ -75,25 +76,47 @@ class Fighter():
 
       #check player 2 controls
       if self.player == 2:
-        #movement
-        if key[pygame.K_LEFT]:
-          dx = -SPEED
-          self.running = True
-        if key[pygame.K_RIGHT]:
-          dx = SPEED
-          self.running = True
-        #jump
-        if key[pygame.K_UP] and self.jump == False:
-          self.vel_y = -30
-          self.jump = True
-        #attack
-        if key[pygame.K_KP1] or key[pygame.K_KP2]:
-          self.attack(target)
-          #determine which attack type was used
-          if key[pygame.K_KP1]:
-            self.attack_type = 1
-          if key[pygame.K_KP2]:
-            self.attack_type = 2
+          if single_player_mode:
+              # === AI CONTROL START ===
+              # Simple AI Logic
+              if self.rect.centerx > target.rect.centerx + 20:
+                  dx = -SPEED  # move left
+                  self.running = True
+              elif self.rect.centerx < target.rect.centerx - 20:
+                  dx = SPEED  # move right
+                  self.running = True
+
+               # If close enough, attack randomly
+              if abs(self.rect.centerx - target.rect.centerx) < 100 and self.attack_cooldown == 0:
+                  self.attack(target)
+                  self.attack_type = random.choice([1, 2])
+              # Jump randomly for some variety
+              if random.randint(0, 100) < 2 and self.jump == False:
+                  self.vel_y = -30
+                  self.jump = True
+               # === AI CONTROL END ===
+          else:
+              # Multiplayer: control via keyboard
+              # ... (existing key[pygame.K_LEFT], etc.)
+              #movement
+                if key[pygame.K_LEFT]:
+                  dx = -SPEED
+                  self.running = True
+                if key[pygame.K_RIGHT]:
+                  dx = SPEED
+                  self.running = True
+                #jump
+                if key[pygame.K_UP] and self.jump == False:
+                  self.vel_y = -30
+                  self.jump = True
+                #attack
+                if key[pygame.K_KP1] or key[pygame.K_KP2]:
+                  self.attack(target)
+                  #determine which attack type was used
+                  if key[pygame.K_KP1]:
+                    self.attack_type = 1
+                  if key[pygame.K_KP2]:
+                    self.attack_type = 2
 
 
     #apply gravity
