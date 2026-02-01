@@ -19,7 +19,6 @@ def load_gif_frames(path):
         pass
     return frames
 
-
 mixer.init()
 pygame.init()
 
@@ -35,6 +34,22 @@ welcome_bg = pygame.transform.scale(welcome_bg, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 mode_bg = pygame.image.load("assets/images/background/welcomeimage/mode_bg.jpg").convert()
 mode_bg = pygame.transform.scale(mode_bg, (SCREEN_WIDTH, SCREEN_HEIGHT))
+
+CHARACTERS = {
+    "warrior": {
+        "name": "Warrior",
+        "path": "assets/images/characters/warrior/Sprites/warrior.png",
+        "data": [162, 4, [72, 56]],
+        "steps": [10, 8, 1, 7, 7, 3, 7]
+    },
+    "wizard": {
+        "name": "Wizard",
+        "path": "assets/images/characters/wizard/Sprites/wizard.png",
+        "data": [250, 3, [112, 107]],
+        "steps": [8, 8, 1, 8, 8, 3, 7]
+    }
+    # Add more characters here
+}
 
 # Randomly select a GIF background
 background_gif_files = glob.glob("assets/images/background/*.gif")
@@ -59,16 +74,6 @@ score = [0, 0]#player scores. [P1, P2]
 round_over = False
 ROUND_OVER_COOLDOWN = 2000
 
-#define fighter variables
-WARRIOR_SIZE = 162
-WARRIOR_SCALE = 4
-WARRIOR_OFFSET = [72, 56]
-WARRIOR_DATA = [WARRIOR_SIZE, WARRIOR_SCALE, WARRIOR_OFFSET]
-WIZARD_SIZE = 250
-WIZARD_SCALE = 3
-WIZARD_OFFSET = [112, 107]
-WIZARD_DATA = [WIZARD_SIZE, WIZARD_SCALE, WIZARD_OFFSET]
-
 #load music and sounds
 pygame.mixer.music.load("assets/audio/music.mp3")
 pygame.mixer.music.set_volume(0.5)
@@ -78,17 +83,13 @@ sword_fx.set_volume(0.5)
 magic_fx = pygame.mixer.Sound("assets/audio/magic.wav")
 magic_fx.set_volume(0.75)
 
-
-#load spritesheets
-warrior_sheet = pygame.image.load("assets/images/warrior/Sprites/warrior.png").convert_alpha()
-wizard_sheet = pygame.image.load("assets/images/wizard/Sprites/wizard.png").convert_alpha()
+# load character spritesheets
+character_sheets = {}
+for name, info in CHARACTERS.items():
+    character_sheets[name] = pygame.image.load(info["path"]).convert_alpha()
 
 #load vicory image
 victory_img = pygame.image.load("assets/images/icons/victory.png").convert_alpha()
-
-#define number of steps in each animation
-WARRIOR_ANIMATION_STEPS = [10, 8, 1, 7, 7, 3, 7]
-WIZARD_ANIMATION_STEPS = [8, 8, 1, 8, 8, 3, 7]
 
 #define font
 count_font = pygame.font.Font("assets/fonts/turok.ttf", 80)
@@ -117,10 +118,6 @@ def draw_health_bar(health, x, y):
   pygame.draw.rect(screen, RED, (x, y, 400, 30))
   pygame.draw.rect(screen, YELLOW, (x, y, 400 * ratio, 30))
 
-
-#create two instances of fighters
-fighter_1 = Fighter(1, 200, 310, False, WARRIOR_DATA, warrior_sheet, WARRIOR_ANIMATION_STEPS, sword_fx)
-fighter_2 = Fighter(2, 700, 310, True, WIZARD_DATA, wizard_sheet, WIZARD_ANIMATION_STEPS, magic_fx)
 
 def show_welcome_screen():
     welcome_running = True
@@ -171,8 +168,50 @@ def show_menu():
 
         pygame.display.update()
 
+def select_character(player_num):
+    selected_index = 0
+    character_keys = list(CHARACTERS.keys())
+    selecting = True
+
+    while selecting:
+        screen.fill((30, 30, 30))
+        draw_text(f"Player {player_num} - Select Your Character", count_font, WHITE, 150, 50)
+
+        for i, key in enumerate(character_keys):
+            color = (255, 255, 0) if i == selected_index else (100, 100, 100)
+            draw_text(CHARACTERS[key]["name"], score_font, color, SCREEN_WIDTH // 2 - 80, 150 + i * 60)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    selected_index = (selected_index - 1) % len(character_keys)
+                elif event.key == pygame.K_DOWN:
+                    selected_index = (selected_index + 1) % len(character_keys)
+                elif event.key == pygame.K_RETURN:
+                    selecting = False
+
+        pygame.display.update()
+        clock.tick(30)
+
+    return character_keys[selected_index]
+
+
 show_welcome_screen()
 single_player_mode = show_menu()
+
+# Character selection
+fighter_1_name = select_character(1)
+fighter_2_name = select_character(2 if not single_player_mode else "AI")
+
+# Now create fighters using selected names
+fighter_1_info = CHARACTERS[fighter_1_name]
+fighter_2_info = CHARACTERS[fighter_2_name]
+
+fighter_1 = Fighter(1, 200, 310, False, fighter_1_info["data"], character_sheets[fighter_1_name], fighter_1_info["steps"], sword_fx)
+fighter_2 = Fighter(2, 700, 310, True, fighter_2_info["data"], character_sheets[fighter_2_name], fighter_2_info["steps"], magic_fx)
 
 
 #game loop
@@ -199,11 +238,17 @@ while run:
 
   else:
     #display count timer
+    # Let fighters fall to ground even during countdown
+    fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2, round_over, single_player_mode=False)
+    fighter_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_1, round_over, single_player_mode=False)
+
+    # Display countdown text
     draw_text(str(intro_count), count_font, RED, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3)
-    #update count timer
+
     if (pygame.time.get_ticks() - last_count_update) >= 1000:
-      intro_count -= 1
-      last_count_update = pygame.time.get_ticks()
+        intro_count -= 1
+        last_count_update = pygame.time.get_ticks()
+
 
   #update fighters
   fighter_1.update()
@@ -229,8 +274,9 @@ while run:
     if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
       round_over = False
       intro_count = 3
-      fighter_1 = Fighter(1, 200, 310, False, WARRIOR_DATA, warrior_sheet, WARRIOR_ANIMATION_STEPS, sword_fx)
-      fighter_2 = Fighter(2, 700, 310, True, WIZARD_DATA, wizard_sheet, WIZARD_ANIMATION_STEPS, magic_fx)
+      fighter_1 = Fighter(1, 200, 310, False, fighter_1_info["data"], character_sheets[fighter_1_name], fighter_1_info["steps"], sword_fx)
+      fighter_2 = Fighter(2, 700, 310, True, fighter_2_info["data"], character_sheets[fighter_2_name], fighter_2_info["steps"], magic_fx)
+
 
   #event handler
   for event in pygame.event.get():

@@ -128,10 +128,10 @@ class Fighter():
       dx = -self.rect.left
     if self.rect.right + dx > screen_width:
       dx = screen_width - self.rect.right
-    if self.rect.bottom + dy > screen_height - 110:
+    if self.rect.bottom + dy > screen_height - 70:
       self.vel_y = 0
       self.jump = False
-      dy = screen_height - 110 - self.rect.bottom
+      dy = screen_height - 70 - self.rect.bottom
 
     #ensure players face each other
     if target.rect.centerx > self.rect.centerx:
