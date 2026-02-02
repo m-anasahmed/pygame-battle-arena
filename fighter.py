@@ -1,3 +1,5 @@
+# fighter.py
+
 import pygame
 import random
 

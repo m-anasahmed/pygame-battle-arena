@@ -1,10 +1,12 @@
 # ⚔️ Multiplayer Battle Arena (Python + Pygame)
+
 A classic 2D fighting game built with **Pygame**, featuring two unique characters — a Warrior and a Wizard — battling it out with melee and magic attacks.  
 The game includes animations, health bars, a round system, victory screens, and background music.
 
 ---
 
 ## 🎮 Features
+
 - **Two playable characters** with different spritesheets
 - **Attack combos** (two attack types per character)
 - **Jumping, running, idle, hit, and death animations**
@@ -17,7 +19,9 @@ The game includes animations, health bars, a round system, victory screens, and 
 ---
 
 ## 🕹️ Controls
+
 ### **Player 1**
+
 | Action      | Key  |
 |-------------|------|
 | Move Left   | A    |
@@ -27,6 +31,7 @@ The game includes animations, health bars, a round system, victory screens, and 
 | Attack 2    | T    |
 
 ### **Player 2**
+
 | Action      | Key              |
 |-------------|------------------|
 | Move Left   | ← (Left Arrow)   |
@@ -38,6 +43,7 @@ The game includes animations, health bars, a round system, victory screens, and 
 ---
 
 ## 📂 Folder Structure
+
 brawler/
 │
 ├── assets/
@@ -73,9 +79,11 @@ Example:
 ## 📦 Installation & Setup
 
 ### 🚀 How to Run
+
 ### 1️⃣ Install Dependencies
+
 Make sure you have **Python 3** installed.  
-Install `pygame`: 
+Install `pygame`:
 `pip install pygame`
 
 **Clone the repository**
@@ -83,20 +91,23 @@ Install `pygame`:
    `cd multiplayer-battle-arena`
 
 ### 2️⃣ Run the Game
+
 In the project folder:
 python `main.py`
 
 ---
 
 ## 🛠️ Technologies Used
-* **Python 3**
-* **Pygame** (for rendering, input handling, and sound)
-* **Spritesheets** for animation
-* **Custom pixel art and audio**
+
+- **Python 3**
+- **Pygame** (for rendering, input handling, and sound)
+- **Spritesheets** for animation
+- **Custom pixel art and audio**
 
 ---
 
 ## 🎮 Future plans
+
 - **Multiplayer & AI Mode** – Play with friends or against the computer.
 - **Character Selection** – Choose from multiple fighters with unique animations.
 - **Sprite Sheet & Folder Animations** – Supports both styles for smooth motion.
@@ -106,12 +117,14 @@ python `main.py`
 ---
 
 ## 📜 License
+
 This project is for **learning purposes**.
 If you use the code or assets, please credit the original creators.
 
 ---
 
 ## 👨‍💻 Author
+
 Created by **Muhammad Anas** — Inspired by classic arcade fighting games.
 
 ---
